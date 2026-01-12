@@ -7,7 +7,7 @@
 set -e
 
 NODE_TYPE=${1:-worker}
-K8S_VERSION="1.33"
+K8S_VERSION="1.35"
 
 echo "=== Starting Kubernetes full bootstrap for $NODE_TYPE node ==="
 
