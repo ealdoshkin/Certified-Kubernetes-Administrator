@@ -28,6 +28,8 @@ Vagrant.configure("2") do |config|
       node.cpus = 3
     end
     lb.vm.provision "file", source: "bootstrap/lb-setup.sh", destination: "/tmp/lb-setup.sh"
+    lb.vm.provision "file", source: "bootstrap/prepare-expired-certs.sh", destination: "/tmp/prepare-expired-certs.sh"
+    lb.vm.provision "file", source: "bootstrap/restore-normal-time.sh", destination: "/tmp/restore-normal-time.sh"
 
     # Bootstrap script for master
     lb.vm.provision "shell", inline: <<-SHELL
