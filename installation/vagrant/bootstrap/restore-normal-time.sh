@@ -1,45 +1,36 @@
 #!/bin/bash
-echo "=== Restoring normal system time ==="
+echo "=== Restoring Correct System Time ==="
 echo
 
-# 1. Stop kubelet and services again
-echo "[1/6] Stopping Kubernetes services..."
+# 1. Stop services affected by time change
+echo "[1/5] Stopping time-sensitive services..."
 sudo systemctl stop kubelet docker containerd
 echo "Services stopped."
 
-# 2. Enable and force time synchronization
-echo "[2/6] Enabling time synchronization..."
+# 2. Enable NTP synchronization
+echo "[2/5] Enabling time synchronization..."
+sudo timedatectl set-ntp true
 sudo systemctl enable systemd-timesyncd
 sudo systemctl start systemd-timesyncd
-sudo timedatectl set-ntp true
-echo "Time sync enabled."
 
-# 3. Force immediate sync with NTP servers
-echo "[3/6] Forcing immediate time sync..."
+# 3. Force sync from NTP servers
+echo "[3/5] Forcing NTP synchronization..."
 sudo systemctl restart systemd-timesyncd
-sleep 2
-sudo timedatectl set-ntp false
-sudo timedatectl set-ntp true
-echo "Time sync triggered."
-
-# 4. Verify synchronization
-echo "[4/6] Verifying time sync status..."
-timedatectl status
-echo "Waiting for sync to complete..."
 sleep 5
 
-# 5. Show before/after time
-echo "[5/6] Time adjustment complete:"
-echo "Current system time: $(date)"
-echo "Real-world time should now be correct."
+# 4. Alternative: Sync from RTC if NTP fails
+echo "[4/5] Checking sync status..."
+if ! timedatectl status | grep -q "synchronized: yes"; then
+    echo "NTP sync failed, syncing from hardware clock..."
+    sudo hwclock --hctosys
+    echo "Time set from hardware clock."
+fi
 
-# 6. Restart services
-echo "[6/6] Restarting Kubernetes services..."
+# 5. Restart services
+echo "[5/5] Restarting services..."
 sudo systemctl start docker containerd kubelet
-echo "Services restarted."
-echo
-echo "=== IMPORTANT NEXT STEPS ==="
-echo "1. Check if control plane is healthy: sudo kubectl get pods -n kube-system"
-echo "2. Renew certificates if needed: sudo kubeadm certs renew all"
-echo "3. Restart static pods: sudo systemctl restart kubelet"
-echo "4. Full system reboot is recommended to clear any time-related issues."
+
+# Final verification
+echo "=== Verification ==="
+timedatectl status
+echo "System time should now be correct."

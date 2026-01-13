@@ -79,11 +79,20 @@ systemctl restart kubelet
 ```sh
 # Check expiry
 kubeadm certs check-expiration
+sudo openssl x509 -in /var/lib/kubelet/pki/kubelet-client-current.pem -noout -dates
 
 # Renew all certs
 kubeadm certs renew all
 
+# Restart all components
+kubectl delete pods -n kube-system
+
+# Reload kubelet
+cp /etc/kubernetes/admin.conf /etc/kubernetes/bootstrap-kubelet.conf
 systemctl restart kubelet
+
+# Worker
+kubeadm reset -f && kubeadm join
 ```
 
 

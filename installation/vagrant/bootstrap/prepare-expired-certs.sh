@@ -16,11 +16,18 @@ sudo systemctl stop systemd-timesyncd
 sudo systemctl disable systemd-timesyncd
 echo "Time synchronization disabled."
 
-# 3. Set date to 1 year ago
-echo "[3/5] Setting system date 1 year back..."
-OLD_DATE=$(date -d "1 year ago" "+%Y-%m-%d %H:%M:%S")
-echo "Setting date to: $OLD_DATE"
-sudo date --set "$OLD_DATE"
+# # 3. Set date to 1 year ago
+# echo "[3/5] Setting system date 1 year back..."
+# OLD_DATE=$(date -d "1 year ago" "+%Y-%m-%d %H:%M:%S")
+# echo "Setting date to: $OLD_DATE"
+# sudo date --set "$OLD_DATE"
+# echo "Date set successfully."
+
+# 3. Set date to 1 year FORWARD
+echo "[3/6] Setting system date 1 year FORWARD..."
+FUTURE_DATE=$(date -d "1 year" "+%Y-%m-%d %H:%M:%S")
+echo "Setting date to: $FUTURE_DATE"
+sudo date --set "$FUTURE_DATE"
 echo "Date set successfully."
 
 # 4. Verify the change
