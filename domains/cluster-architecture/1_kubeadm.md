@@ -53,6 +53,7 @@ rm -rf /var/lib/etcd
 ## Update cluster
 
 Update cluster:
+
 ```sh
 # Step-by-step 1.33 > 1.34 #
 kubeadm upgrade plan
@@ -95,20 +96,75 @@ systemctl restart kubelet
 kubeadm reset -f && kubeadm join
 ```
 
+## Regenerate control-plane config
 
+```sh
+k get cm -n kube-system kubeadm-config -oyaml >kubeadm.yml
+kubeadm init phase etcd local --config=kubeadm.yaml --dry-run
+kubeadm init phase control-plane all --dry-run --config=kubeadm.yaml
+```
+
+## Regenerate full kubelet config
+
+```sh
+kubeadm init phase kubeconfig --config=kubeadm.yml #kubeconfig
+kubeadm init phase kubelet-start --config=kubeadm.yml #/var/lib/kubelet
+kubeadm init phase kubelet-finalize all --config=kubeadm.yml #kubeconfig+crt
+```
 
 ## Etcd
 
-
 Create backup:
+
 ```sh
-ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379
---cacert=/etc/kubernetes/pki/etcd/ca.crt
---cert=/etc/kubernetes/pki/etcd/server.crt
---key=/etc/kubernetes/pki/etcd/server.key
+ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 \
+--cacert=/etc/kubernetes/pki/etcd/ca.crt \
+--cert=/etc/kubernetes/pki/etcd/server.crt \
+--key=/etc/kubernetes/pki/etcd/server.key \
 snapshot save /tmp/etcd_backup.db
 ```
 
+Stop services:
+
+```sh
+mkdir /etc/kubernetes/backup
+mv /etc/kubernetes/manifest/* /etc/kubernetes/backup/
+```
+
+Restore backup (etcd>=3.6):
+
+```sh
+etcdutl snapshot restore etcd-snap --data-dir=/var/lib/etcd --initial-cluster=master-1=https://192.168.56.21:2380 --initial-advertise-peer-urls=https://192.168.56.21:2380 --name=master-1
+```
+
+Start services:
+
+```sh
+mv /etc/kubernetes/manifest/* /etc/kubernetes/backup/
+```
+
+Check etcd state:
+
+```sh
+etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key member list
+
+ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key endpoint status -w table
+```
+
+Reset other masters:
+```sh
+kubeadm init phase upload-certs --upload-certs
+kubeadm token create --print-join-command
+kubeadm reset -f
+kubeadm join
+```
+
+Change **ETCD** directory:
+
+```sh
+- hostPath:
+    path: /var/lib/etcd-restore
+```
 
 ## Configuration
 

@@ -15,6 +15,14 @@ ReplicaSet - запуск реплик пода, Deployment реплика сэ�
 StatefulSet - static names (pods, storage)
 
 
+## Load Balance
+
+- Cloud Provider
+- HAProxy+keepalived (стандарт)
+- Nginx (сложно в настройке)
+- KubeVIP/Metalb (декларировано в кластере)
+
+
 ## Limits
 
 - No more than 110 pods per node
