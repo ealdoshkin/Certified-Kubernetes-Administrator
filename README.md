@@ -38,6 +38,7 @@ This repository contains study materials, exercises, templates, and resources fo
 ### Exam domains
 
 1. **Troubleshooting** - 30%
+
    - Troubleshoot clusters and nodes
    - Troubleshoot cluster components
    - Monitor cluster and application resource usage
@@ -45,6 +46,7 @@ This repository contains study materials, exercises, templates, and resources fo
    - Troubleshoot services and networking
 
 2. **Cluster Architecture, Installation & Configuration** - 25%
+
    - Manage role based access control (RBAC)
    - Prepare underlying infrastructure for installing a Kubernetes cluster
    - Create and manage Kubernetes clusters using kubeadm
@@ -55,6 +57,7 @@ This repository contains study materials, exercises, templates, and resources fo
    - Understand CRDs, install and configure operators
 
 3. **Services & Networking** - 20%
+
    - Understand connectivity between Pods
    - Define and enforce Network Policies
    - Use ClusterIP, NodePort, LoadBalancer service types and endpoints
@@ -63,6 +66,7 @@ This repository contains study materials, exercises, templates, and resources fo
    - Understand and use CoreDNS
 
 4. **Workloads & Scheduling** - 15%
+
    - Understand application deployments and how to perform rolling update and rollbacks
    - Use ConfigMaps and Secrets to configure applications
    - Configure workload autoscaling
