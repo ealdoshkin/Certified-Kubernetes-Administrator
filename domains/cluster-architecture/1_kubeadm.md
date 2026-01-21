@@ -166,9 +166,34 @@ Change **ETCD** directory:
     path: /var/lib/etcd-restore
 ```
 
+
+Restore HA etcd external cluster (for each node)
+
+```bash
+# Create snapshot
+etcdctl --endpoints 127.0.0.1:2379 --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key  --cacert=/etc/kubernetes/pki/etcd/ca.crt   snapshot save etcd-snap
+
+# Prepare
+systemctl stop etcd.service
+EDITOR=vim systemctl edit --full etcd.service
+
+# Restore
+etcdutl snapshot restore etcd-snap --data-dir=/var/lib/etcd-restore --initial-cluster=master-1=https://192.168.56.21:2380,master-2=https://192.168.56.22:2380,master-3=https://192.168.56.23:2380 --initial-advertise-peer-urls=https://192.168.56.21:2380 --name=master-1
+
+# Run
+chown etcd:etcd -R /var/lib/etcd-restore
+systemctl daemon-reload
+systemctl start etcd.service
+```
+
 ## Configuration
 
 ```sh
 kubectl cluster-info # See HA status
 kubectl get cm kubeadm-config -n kube-system -o yaml
+```
+
+Migrate configuration:
+```sh
+kubeadm config migrate --old-config kubeadm.yaml
 ```
