@@ -25,3 +25,9 @@ StatefulSet - static names (pods, storage)
 
 
 targetPort - порт пода
+
+
+## Packages
+
+Metrics server - взаимодействует с kubelet на предмет состояния подов
+Kube-state-metrics - опрашивает Api и состояние объектов в кластере
