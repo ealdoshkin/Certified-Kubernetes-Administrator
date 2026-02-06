@@ -126,6 +126,7 @@ kubectl label nodes <your-node-name> disktype=ssd
 nodeName: staging-node1 - назначить на ноду
 kubectl get pods --sort-by=.metadata.name
 kubectl get componentstatuses
+kubectl replace -f question6.yaml --force # заменить и перезапустить под
 ```
 
 ### Doc

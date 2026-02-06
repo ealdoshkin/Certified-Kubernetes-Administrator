@@ -21,7 +21,7 @@ This domain covers Kubernetes networking, services, and ingress.
 - ClusterIP services
 - NodePort services
 - LoadBalancer services
-- Headless services
+- Headless services: None (only pod ips)
 - Understand service endpoints
 - Configure service selectors
 

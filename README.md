@@ -119,7 +119,3 @@ This repository contains study materials, exercises, templates, and resources fo
 - **cheatsheets/**: Quick reference commands and shortcuts
 - **scripts/**: Installation scripts and utilities
 - **tasks/**: Personal study tasks and notes
-
----
-
-Good luck with your CKA exam preparation! 🎯

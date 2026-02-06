@@ -1018,15 +1018,15 @@ alertmanager:
     ## Storage is the definition of how storage will be used by the Alertmanager instances.
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/platform/storage.md
     ##
-    storage: {}
-    # volumeClaimTemplate:
-    #   spec:
-    #     storageClassName: gluster
-    #     accessModes: ["ReadWriteOnce"]
-    #     resources:
-    #       requests:
-    #         storage: 50Gi
-    #     selector: {}
+    storage:
+     volumeClaimTemplate:
+       spec:
+         storageClassName: standard
+         accessModes: ["ReadWriteOnce"]
+         resources:
+           requests:
+             storage: 5Gi
+         selector: {}
 
 
     ## The external URL the Alertmanager instances will be available under. This is necessary to generate correct URLs. This is necessary if Alertmanager is not served from root of a DNS name. string  false
@@ -1367,15 +1367,17 @@ grafana:
 
   # # To make Grafana persistent (Using Statefulset)
   # #
-  # persistence:
-  #   enabled: true
-  #   type: sts
-  #   storageClassName: "storageClassName"
-  #   accessModes:
-  #     - ReadWriteOnce
-  #   size: 20Gi
-  #   finalizers:
-  #     - kubernetes.io/pvc-protection
+  initChownData:
+    enabled: false
+  persistence:
+    enabled: false
+    type: sts
+    storageClassName: "standard"
+    accessModes:
+      - ReadWriteMany
+    size: 2Gi
+    finalizers:
+      - kubernetes.io/pvc-protection
 
   serviceAccount:
     create: true
@@ -1470,7 +1472,12 @@ grafana:
 
   ## Configure additional grafana datasources (passed through tpl)
   ## ref: https://grafana.com/docs/grafana/latest/administration/provisioning/#datasources
-  additionalDataSources: []
+  additionalDataSources:
+   - name: Loki
+     type: loki
+     url: http://loki.monitoring.svc:3100
+     access: proxy
+     isDefault: false  # ← Must be false if Prometheus is true
   # - name: prometheus-sample
   #   access: proxy
   #   basicAuth: true
@@ -2215,12 +2222,13 @@ kubeEtcd:
     ## proxyUrl: URL of a proxy that should be used for scraping.
     ##
     proxyUrl: ""
-    scheme: http
     insecureSkipVerify: false
-    serverName: ""
-    caFile: ""
-    certFile: ""
-    keyFile: ""
+    # Mount the secret created earlier
+    caFile: /etc/prometheus/secrets/etcd-client-cert/ca.crt
+    certFile: /etc/prometheus/secrets/etcd-client-cert/tls.crt
+    keyFile: /etc/prometheus/secrets/etcd-client-cert/tls.key
+    # Server name may need to be 'localhost' or the VM IP
+    serverName: localhost
 
     ## port: Name of the port the metrics will be scraped from
     ##
@@ -4098,7 +4106,8 @@ prometheus:
     ## reflected in the running Pods. To change the secrets mounted into the Prometheus Pods, the object must be deleted and recreated
     ## with the new list of secrets.
     ##
-    secrets: []
+    secrets:
+      - etcd-client-cert
 
     ## ConfigMaps is a list of ConfigMaps in the same namespace as the Prometheus object, which shall be mounted into the Prometheus Pods.
     ## The ConfigMaps are mounted into /etc/prometheus/configmaps/.
@@ -4342,17 +4351,17 @@ prometheus:
     ## Prometheus StorageSpec for persistent data
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/platform/storage.md
     ##
-    storageSpec: {}
+    storageSpec:
     ## Using PersistentVolumeClaim
     ##
-    #  volumeClaimTemplate:
-    #    spec:
-    #      storageClassName: gluster
-    #      accessModes: ["ReadWriteOnce"]
-    #      resources:
-    #        requests:
-    #          storage: 50Gi
-    #      selector: {}
+     volumeClaimTemplate:
+       spec:
+         storageClassName: standard
+         accessModes: ["ReadWriteOnce"]
+         resources:
+           requests:
+             storage: 5Gi
+         selector: {}
 
     ## Using tmpfs volume
     ##
@@ -5182,15 +5191,15 @@ thanosRuler:
     ## Storage is the definition of how storage will be used by the ThanosRuler instances.
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/platform/storage.md
     ##
-    storage: {}
-    # volumeClaimTemplate:
-    #   spec:
-    #     storageClassName: gluster
-    #     accessModes: ["ReadWriteOnce"]
-    #     resources:
-    #       requests:
-    #         storage: 50Gi
-    #     selector: {}
+    storage:
+     volumeClaimTemplate:
+       spec:
+         storageClassName: standard
+         accessModes: ["ReadWriteOnce"]
+         resources:
+           requests:
+             storage: 5Gi
+         selector: {}
 
     ## AlertmanagerConfig define configuration for connecting to alertmanager.
     ## Only available with Thanos v0.10.0 and higher. Maps to the alertmanagers.config Thanos Ruler arg.

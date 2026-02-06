@@ -15,6 +15,7 @@ Fast create cr:
 ```sh
 k create ns test --oyaml --dry-run=client > cr.yml
 kubectl explain websites.example.com.spec >> cr.yml
+k explain ippools.crd.projectcalico.org.spec --recursive
 ```
 
 Удалить CRD:
