@@ -1,1 +1,0 @@
-Set the node labelled with name:node-01 as unavailable and reschedule all the pods running on it.

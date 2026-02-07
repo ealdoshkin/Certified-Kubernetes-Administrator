@@ -14,14 +14,11 @@ This repository contains study materials, exercises, templates, and resources fo
 │   ├── workloads-scheduling/ # 15% of exam
 │   └── storage/             # 10% of exam
 ├── docs/                     # General documentation and study guides
-├── books/                    # Study books and PDFs
 ├── templates/                # Kubernetes resource templates
 ├── exercises/                # Practice exercises and labs
 ├── examples/                 # Example manifests and troubleshooting cases
 ├── tools/                    # Tool documentation (bash, jq, yq, vim, tmux)
 ├── cheatsheets/              # Quick reference commands
-├── scripts/                  # Installation and utility scripts
-└── tasks/                    # Study tasks and notes
 ```
 
 ## 📖 Exam Information

@@ -132,3 +132,28 @@ kubectl replace -f question6.yaml --force # заменить и перезапу
 ### Doc
 
 - Command argument
+
+
+
+kubectl set image deployment/nginx-deployment nginx=nginx:1.21.1
+kubectl scale deployments/<deployment-name>  --replicas=4
+kubectl label pods redis-pod tier=database
+kubectl label pods redis-pod tier-
+
+ kubectl port-forward svc/nginx-demo 8000:80
+kubectl create svc clusterip redis --tcp=8080:9090 --dry-run=client -o yaml > service.yaml
+kubectl get pods -l environment=production,tier=frontend
+kubectl top pods --sort-by=cpu
+
+kubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run=client -o yaml
+kubectl annotate po nginx1 nginx2 nginx3 description='my description'
+kubectl explain po.spec
+
+kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run=client -- /bin/sh -c 'sleep 3600' > pod.yaml
+
+
+kubectl create cronjob time-limited-job --image=busybox --restart=Never --dry-run=client --schedule="* * * * *" -o yaml -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster' > time-limited-job.yaml
+kk
+
+
+helm list --pending -A
