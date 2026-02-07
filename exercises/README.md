@@ -1,122 +1,103 @@
-# CKA Practice Exercises & Labs
+# CKA Practice Exercises
 
-This directory contains comprehensive practice materials organized for effective CKA exam preparation.
+This directory contains practice exercises and labs organized for effective CKA exam preparation.
 
 ## 📁 Directory Structure
 
 ```
 exercises/
-├── labs/                    # Hands-on lab exercises (25 tasks)
-│   ├── tasks/              # Lab task descriptions
-│   └── solutions/         # Solutions for all tasks
-│
-├── practice-exams/         # Practice exam questions (converted from PDFs)
-│   ├── cka_0.md
-│   ├── cka_1.md
-│   ├── cka_4.md
-│   ├── cka_6.md
-│   ├── cka_8.md
-│   └── CKAD.md
-│
-├── by-topic/              # Exercises organized by CKA exam domains
-│   ├── troubleshooting/   # 30% of exam
-│   ├── cluster-architecture/  # 25% of exam
-│   ├── networking/        # 20% of exam
-│   ├── workloads-scheduling/  # 15% of exam
-│   └── storage/          # 10% of exam
-│
-└── reference/            # Quick reference guides and cheat sheets
+├── by-domain/              # Exercises organized by CKA exam domains ⭐ RECOMMENDED
+│   ├── storage/           # 10% - 3 tasks
+│   ├── cluster-architecture/ # 25% - 5 tasks
+│   ├── networking/       # 20% - 3 tasks
+│   ├── workloads-scheduling/ # 15% - 8 tasks
+│   └── troubleshooting/  # 30% - 4 tasks
+├── cka-lab/              # Original 25 lab tasks (for reference)
+├── practice-exams/       # Practice exam questions
+├── CKAD-exercises/       # CKAD exercises (additional practice)
+├── 1/                    # Domain-specific exercises
+├── 2/                    # Additional exercises by topic
+└── tasks/                # Study tasks and notes
 ```
 
 ## 🎯 Recommended Study Path
 
-### Phase 1: Foundation (Weeks 1-2)
-1. **Start with `by-topic/`** - Learn concepts by domain
-   - Begin with `workloads-scheduling/core-concepts/` for basics
-   - Progress through each domain systematically
+### Start Here: `by-domain/` ⭐
 
-2. **Practice with `labs/`** - Apply what you learned
-   - Complete tasks 1-10 (beginner to intermediate)
-   - Try solving without looking at solutions first
+**Organized by exam domains with comprehensive coverage:**
+- 88 organized tasks total
+  - 23 from cka-lab (original lab tasks)
+  - 16 from exercises/1/ (domain-specific exercises)
+  - 19 from exercises/2/ (security, networking, secrets)
+  - 17 from CKAD-exercises/ (ConfigMaps, Deployments, Jobs, Probes, Storage)
+  - 13 from practice-exams/ (Init containers, DaemonSet, DNS, etcd, kubeadm, troubleshooting)
+- Clear domain categorization
+- Each domain has README with task descriptions
+- YAML example files included for reference
+- No duplicate or similar tasks
 
-### Phase 2: Advanced Practice (Weeks 3-4)
-1. **Continue with `labs/`** - Complete all 25 tasks
-   - Focus on troubleshooting tasks (highest exam weight)
-   - Practice cluster architecture scenarios
+### Domain Priority
 
-2. **Deep dive into `by-topic/`** - Strengthen weak areas
-   - Review exercises in your weakest domain
-   - Practice until you're comfortable
+1. **Troubleshooting (30%)** - Start here! Highest weight
+   - 4 tasks covering logging, node issues, debugging
+   
+2. **Cluster Architecture (25%)** - Second priority
+   - 5 tasks covering RBAC, upgrades, backups, etcd
 
-### Phase 3: Exam Simulation (Weeks 5-6)
-1. **Take `practice-exams/`** - Simulate real exam conditions
-   - Set 2-hour timer
-   - Use only allowed resources
-   - Complete multiple practice exams
+3. **Networking (20%)** - Important
+   - 3 tasks covering services, ingress, network policies
 
-2. **Final review** - Go through `reference/` materials
-   - Memorize common kubectl patterns
-   - Review quick reference guides
+4. **Workloads & Scheduling (15%)** - Core concepts
+   - 8 tasks covering deployments, pods, scheduling
 
-## 📊 Exam Domain Focus
+5. **Storage (10%)** - Smallest domain
+   - 3 tasks covering PVs, PVCs, storage classes
 
-| Domain | Weight | Priority | Location |
-|------|--------|----------|----------|
-| Troubleshooting | 30% | ⭐⭐⭐ | `by-topic/troubleshooting/`, `labs/tasks/` |
-| Cluster Architecture | 25% | ⭐⭐⭐ | `by-topic/cluster-architecture/` |
-| Networking | 20% | ⭐⭐ | `by-topic/networking/` |
-| Workloads & Scheduling | 15% | ⭐⭐ | `by-topic/workloads-scheduling/` |
-| Storage | 10% | ⭐ | `by-topic/storage/` |
+## 📚 Other Resources
 
-## 🛠️ Lab Setup
+### `cka-lab/`
+Original 25 lab tasks. Use for reference, but `by-domain/` is better organized.
 
-### Option 1: Local Cluster (Recommended)
-```bash
-# Create cluster with kubeadm
-# Follow: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/
-```
+### `practice-exams/`
+Practice exam questions converted from PDFs:
+- cka_0.md through cka_8.md
+- CKAD.md
 
-### Option 2: Online Labs
-- [Play with Kubernetes](https://labs.play-with-k8s.com/) - Free, temporary clusters
-- [Killer.sh](https://killer.sh/) - CKA practice environment (paid)
+### `CKAD-exercises/`
+CKAD exercises useful for CKA preparation:
+- Core concepts
+- Pod design
+- Configuration
+- Observability
+- State persistence
 
-### Option 3: Cloud Providers
-- AWS EKS, GCP GKE, Azure AKS (free tier available)
+## 🚀 How to Use
 
-## 📚 Additional Resources
-
-### Original Exercise Sources
-- `CKA-study-guide-exercises/` - Comprehensive study guide (organized in `by-topic/`)
-- `CKA-Exercises/` - Domain-specific exercises (reference materials)
-- `CKAD-exercises/` - CKAD exercises (useful for CKA prep)
-- `CKA-Certified-Kubernetes-Administrator/` - Certification materials
-
-### Quick Links
-- [CKA Exam Information](https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/)
-- [Kubernetes Documentation](https://kubernetes.io/docs/)
-- [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+1. **Start with `by-domain/troubleshooting/`** - 30% of exam
+2. **Move to `by-domain/cluster-architecture/`** - 25% of exam
+3. **Complete remaining domains** - Based on your weak areas
+4. **Take practice exams** - Simulate real exam conditions
+5. **Review solutions** - Compare your approach
 
 ## 💡 Study Tips
 
-1. **Practice Daily** - Consistency beats intensity
-2. **Time Yourself** - Practice completing tasks within time limits
-3. **Use Documentation** - Familiarize yourself with kubernetes.io/docs
-4. **Take Notes** - Document patterns and commands that work
-5. **Review Mistakes** - Learn from errors, don't just move on
-6. **Simulate Exam** - Practice in exam-like conditions regularly
+- **Practice hands-on**: Don't just read, actually complete tasks
+- **Time yourself**: Practice completing tasks within time limits
+- **Review solutions**: Learn from provided solutions
+- **Repeat difficult tasks**: Mastery comes from repetition
+- **Focus on high-weight domains**: Troubleshooting and Cluster Architecture
 
-## 🎓 Exam Day Checklist
+## 📊 Task Summary
 
-- [ ] Chrome browser installed
-- [ ] Webcam and microphone working
-- [ ] Government ID ready
-- [ ] Quiet environment prepared
-- [ ] System check completed (PSI Bridge)
-- [ ] kubectl commands memorized
-- [ ] Documentation bookmarks ready
+| Domain | Weight | Tasks | Priority |
+|--------|--------|-------|----------|
+| Troubleshooting | 30% | 16 | ⭐⭐⭐ |
+| Cluster Architecture | 25% | 24 | ⭐⭐⭐ |
+| Networking | 20% | 12 | ⭐⭐ |
+| Workloads & Scheduling | 15% | 32 | ⭐⭐ |
+| Storage | 10% | 6 | ⭐ |
+| **Total** | **100%** | **88** | |
 
 ---
 
-**Good luck with your CKA exam preparation!** 🚀
-
-Remember: The exam is hands-on. Reading isn't enough - you must practice!
+**Note**: Tasks in `by-domain/` are organized and deduplicated. Original tasks remain in `cka-lab/` for reference.
