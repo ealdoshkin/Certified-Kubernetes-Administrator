@@ -2,6 +2,10 @@
 
 ## Prepare
 
+
+- Setup hostname
+- Setting `ip route add `
+
 Disable swap:
 
 ```sh
@@ -60,4 +64,19 @@ apt-get update
 apt-get install -y kubelet kubeadm kubectl
 apt-mark hold kubelet kubeadm kubectl
 systemctl enable --now kubelet
+```
+
+CRICTL - universal working with CRI
+Use critcl/ctr/nerdctl
+```sh
+crictl --runtime-endpoint
+crictl pods
+crictl pods –label app=nginx
+crictl images
+crictl ps -a
+crictl ps
+crictl exec -it <containerid> <command>
+crictl logs <containerid>
+crictl pull busybox
+ctr images
 ```

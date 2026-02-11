@@ -8,7 +8,10 @@
 cat /etc/resolv.con | grep cluster.local
 
 **Обращаемся к service в пределах namespace**
-ping api
+`ping api`
+
+**Обращаемся к service в другом namespace**
+`ping api.namespace`
 
 **Проверка службы:**
 kubectl -n kube-system get svc kube-dns
@@ -27,3 +30,4 @@ kubectl -n kube-system rollout restart deployment coredns
 - `hosts {}` – статические хосты (aka_/etc/hosts), использовать `fallthrough` для остальных запросов
 - `forward . 1.1.1.1` – перенаправление всех внешних запросов на указанный DNS
 - доп. блок: consul.local:53 {forward . 10.150.0.1} - все запросы *.cluster.local перенаправить
+- `rewrite name substring svc.cka.example.com svc.cluster.local` - переписать на svc.cluster.local

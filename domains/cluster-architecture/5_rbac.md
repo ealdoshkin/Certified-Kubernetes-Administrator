@@ -30,6 +30,11 @@
 | system:public-info-viewer | Read access to non-sensitive cluster info (e.g., nodes, namespaces)   |
 | system:node               | Access for kubelets (node management)                                 |
 
+Удобно посмотреть:
+```sh
+ k describe clusterrole cluster-admin
+```
+
 ## User vs ServiceAccount
 
 - User создается с помощью сертификата (не хранится в кластере) или OIDC
@@ -170,6 +175,11 @@ kubectl config set-context view-context \
 
 # Set default context
 kubectl config use-context view-context --kubeconfig=kubeconfig
+```
+
+Не монтировать SA в под:
+```yaml
+automountServiceAccountToken: false
 ```
 
 ## Kubeconfig

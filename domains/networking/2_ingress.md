@@ -1,5 +1,12 @@
 # Ingress
 
+
+Быстрая генерация:
+```sh
+kubectl create ingress hello-world --rule="example.com/=hello-world:80" -oyaml --dry-run=client
+kubectl create ingress simple --rule="foo.com/bar=svc1:8080,tls=my-cert"
+```
+
 ### 1️⃣ Проверка Ingress / TLS / Events
 
 ```bash

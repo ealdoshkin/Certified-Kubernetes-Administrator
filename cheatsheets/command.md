@@ -2,6 +2,10 @@
 
 ## 1. Generate YAML (without creating) — preferred for templates
 
+
+Use this:
+`kubectl taint --help`
+
 Use `--dry-run=client -o yaml`.
 
 ### Pod
@@ -157,3 +161,55 @@ kk
 
 
 helm list --pending -A
+
+
+
+Extract last deploy state:
+kubectl get deployment my-app -o jsonpath='{.metadata.annotations.kubectl\.kubernetes\.io/last-applied-configuration}' | jq
+
+
+## Add private registry
+
+This command is used to create a Kubernetes secret of type `docker-registry`. This secret allows Kubernetes to authenticate with a private Docker registry when pulling images for your pods. Here’s a breakdown of the process and how to use it:
+
+---
+
+### **What the Command Does**
+```bash
+kubectl create secret docker-registry regcred \
+  --docker-server=<your-registry-server> \
+  --docker-username=<your-username> \
+  --docker-password=<your-password> \
+  --docker-email=<your-email>
+```
+
+- **`regcred`**: The name of the secret you are creating.
+- **`--docker-server`**: The address of your private Docker registry (e.g., `docker.io`, `ghcr.io`, or a custom registry like `myregistry.example.com`).
+- **`--docker-username`**: Your username for the Docker registry.
+- **`--docker-password`**: Your password or access token for the Docker registry.
+- **`--docker-email`**: Your email associated with the Docker registry account.
+
+---
+
+### Use private registry
+
+```bash
+kubectl create secret docker-registry regcred \
+  --docker-server=myregistry.example.com \
+  --docker-username=myusername \
+  --docker-password=mypassword \
+  --docker-email=myemail@example.com
+```
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: mycontainer
+    image: myregistry.example.com/myimage:latest
+  imagePullSecrets:
+  - name: regcred
+```

@@ -56,6 +56,7 @@ Update cluster:
 
 ```sh
 # Step-by-step 1.33 > 1.34 #
+apt upgrade -y kubelet kubeadm kubectl
 kubeadm upgrade plan
 kubeadm upgrade apply v1.19.0
 ```
@@ -70,9 +71,11 @@ systemctl restart kubelet
 Update worker:
 
 ```sh
-kubectl drain worker-1 --ignore-daemonsets --delete-emptydir-data
+kubectl cordon # Only marks node unscheduled
+kubectl drain worker-1 --ignore-daemonsets --delete-emptydir-data --force
 kubeadm upgrade node
 systemctl restart kubelet
+kubectl uncordon worker-1
 ```
 
 ## Renew certificate

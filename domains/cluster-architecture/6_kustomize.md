@@ -9,6 +9,7 @@ kubectl diff -k <dir>           # Показать изменения
 kustomize create --autodetect   # Создать kustomization.yaml
 kubectl get -k ./overlays/dev   # Посмотреть созданные ресурсы
 kustomize edit fix              # Исправить устаревший синтаксис
+kustomize build ./k8s            # Сгенерировать манифесты
 ```
 
 ## Ключевые темы экзамена
@@ -17,12 +18,19 @@ kustomize edit fix              # Исправить устаревший син
 
 ```
 app/
-├── base/                    # Общие манифесты
+├── base-db/                    # Общие манифесты
+│   ├── kustomization.yaml
+│   ├── deployment.yaml
+│   └── service.yaml
+├── base-dep/                    # Общие манифесты
 │   ├── kustomization.yaml
 │   ├── deployment.yaml
 │   └── service.yaml
 └── overlays/
     └── prod/               # Окружение
+       ├── kustomization.yaml
+       └── patches/
+    └── dev/               # Окружение
         ├── kustomization.yaml
         └── patches/
 ```
@@ -63,6 +71,33 @@ configMapGenerator:
   - name: app-config
     literals: [LOG_LEVEL=INFO]
 ```
+
+
+### 5. Задать трансформер (изменение значения)
+
+Simply replace:
+```yaml
+images:
+  name: nginx
+  newName: haproxy
+```
+
+Patch:
+```yaml
+patches:
+  - label-patch.yaml
+
+# Or
+patches:
+  - target:
+      kind: Deployment
+      name: api-deployment
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
+```
+
 
 ## Что проверяют
 

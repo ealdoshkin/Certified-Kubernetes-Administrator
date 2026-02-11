@@ -7,6 +7,15 @@ Run pod command:
     image: radial/busyboxplus:curl
     command: ['sh', '-c', 'while true; do sleep 3600; done']
 ```
+```yam
+  containers:
+  - name: busybox
+    image: radial/busyboxplus:curl
+    command:
+    - sh
+    - c
+    - while true; do echo hello; sleep 2; done
+```
 
 Images:
 ```yaml

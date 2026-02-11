@@ -25,4 +25,3 @@ containers:
   image: nginx
   priorityClassName: high-priority # Reference the PriorityClass
 ```
-````
