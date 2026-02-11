@@ -1,0 +1,14 @@
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-vol
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/path/to/file"
+```
+

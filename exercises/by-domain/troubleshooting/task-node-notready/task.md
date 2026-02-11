@@ -1,1 +1,0 @@
-The node k8s-node is not in ready state. Ssh to the node and troubleshoot the issue, make the changes permanent to avoid the problem in future.
