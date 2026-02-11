@@ -1,9 +1,0 @@
-# kind: CustomResourceDefinition
-# name: widgets.example.com
-apiVersion: example.com/v1
-kind: Widget
-metadata:
-  name: my-widget
-spec:
-  # size: medium
-  replicas: 3
