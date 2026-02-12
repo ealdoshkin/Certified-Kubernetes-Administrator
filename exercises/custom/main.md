@@ -6,4 +6,5 @@
 - Replace flannel to calico
 - ArgoCD CRD
 - Cert-manager CRDs
+- Custom etcd
 
