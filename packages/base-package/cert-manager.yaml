@@ -85,7 +85,7 @@ image:
   pullPolicy: IfNotPresent
   repository: quay.io/jetstack/cert-manager-controller
 ingressShim: {}
-installCRDs: false
+installCRDs: true
 livenessProbe:
   enabled: true
   failureThreshold: 8
