@@ -5,6 +5,7 @@
 ```sh
 kubectl rollout status deployment/myapp
 kubectl rollout history deployment/myaoo
+kubectl rollout history deployment --revision=3
 kubectl scale --replicas=3 deployment/nginx-deploy
 kubectl rollout undo deployment/myapp --to-revision=1
 ```

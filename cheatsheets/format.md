@@ -45,3 +45,15 @@ kubectl set selector --local -f - 'tier=messaging'
 ```
 
 - kubectl top pod --sort-by='memory' : pod with highest memory usage
+
+
+Select running pods in namespace, and display image and sort by restart
+```sh
+kubectl get po -n kube-system -o=jsonpath='{range .items[*]}{.spec.containers[*].image},{" "}{.status.containerStatuses[*].restartCount}{"\n"}{end}'   --sort-by=.status.containerStatuses[*].restartCount --no-headers | tac
+```
+
+
+Выводим имена всех endpoint:
+```sh
+kubectl get endpoints baz -o jsonpath='{range .subsets[*].addresses[*]}{.targetRef.name}{"\n"}{end}'
+```

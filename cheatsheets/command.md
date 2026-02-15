@@ -1,12 +1,15 @@
 # Short command
 
-## 1. Generate YAML (without creating) — preferred for templates
+Fast run:
+`k run alpine --image=alpine -n namespace-netpol -- sleep 1d`
+
+Fast expose with custom name:
+`k expose deployment cka-deploy --selector='env=prod' --name=cka-service --port=8080 --target-port=80`
 
 
 Use this:
 `kubectl taint --help`
 
-Use `--dry-run=client -o yaml`.
 
 ### Pod
 

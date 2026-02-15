@@ -6,6 +6,7 @@ Init single Control-Plane:
 
 ```sh
 kubeadm init --apiserver-advertise-address=192.168.56.11 --pod-network-cidr=10.244.0.0/16
+kubeadm init --kubernetes-version=v1.34.0 # Setting version
 ```
 
 Init HA cluster:
@@ -55,10 +56,15 @@ rm -rf /var/lib/etcd
 Update cluster:
 
 ```sh
+# Search and setup version
+apt-cache policy kubelet
+apt-get install -y kubelet=1.33.0-00 kubeadm=1.33.0-00 kubectl=1.33.0-00
+
 # Step-by-step 1.33 > 1.34 #
 apt upgrade -y kubelet kubeadm kubectl
 kubeadm upgrade plan
 kubeadm upgrade apply v1.19.0
+
 ```
 
 Update Control-Plane:
