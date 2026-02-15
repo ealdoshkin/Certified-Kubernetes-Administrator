@@ -49,17 +49,14 @@ Vagrant.configure("2") do |config|
         node.storage :file, :size => '10G'
       end
 
-      # Copy setup script to VM
-      master.vm.provision "file", source: "bootstrap/full.sh", destination: "/tmp/bootstrap.sh"
-      master.vm.provision "file", source: "bootstrap/prepare-expired-certs.sh", destination: "/tmp/prepare-expired-certs.sh"
-      master.vm.provision "file", source: "bootstrap/restore-normal-time.sh", destination: "/tmp/restore-normal-time.sh"
-
       # Bootstrap script for master
+      master.vm.synced_folder "bootstrap", "/bootstrap"
+
       master.vm.provision "shell", inline: <<-SHELL
         #!/bin/bash
         echo "=== Setting up K8s Master Node ==="
-        chmod +x /tmp/bootstrap.sh
-        /tmp/bootstrap.sh master
+        chmod +x /bootstrap/bootstrap.sh
+        /bootstrap/bootstrap.sh full
       SHELL
     end
   end
@@ -76,17 +73,14 @@ Vagrant.configure("2") do |config|
         node.storage :file, :size => '10G'
       end
 
-      # Copy setup script to VM
-      worker.vm.provision "file", source: "bootstrap/full.sh", destination: "/tmp/bootstrap.sh"
-      worker.vm.provision "file", source: "bootstrap/prepare-expired-certs.sh", destination: "/tmp/prepare-expired-certs.sh"
-      worker.vm.provision "file", source: "bootstrap/restore-normal-time.sh", destination: "/tmp/restore-normal-time.sh"
+      # Bootstrap script for worker
+      worker.vm.synced_folder "bootstrap", "/bootstrap"
 
-      # Bootstrap script for master
       worker.vm.provision "shell", inline: <<-SHELL
         #!/bin/bash
         echo "=== Setting up K8s Worker Node ==="
-        chmod +x /tmp/bootstrap.sh
-        /tmp/bootstrap.sh worker
+        chmod +x /bootstrap/bootstrap.sh
+        /bootstrap/bootstrap.sh full
       SHELL
     end
   end
