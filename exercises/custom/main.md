@@ -1,10 +1,10 @@
 # My questions
 
-- Install cluster with rkt, dockershim(docker) and replace to containerd
+- Install cluster with rkt, dockershim(docker) and replace to containerd [x]
 - Install custom scheduler and assign for pod [x]
-- Expired cert in cluster
-- Replace flannel to calico
+- Expired cert in cluster [x]
+- Replace flannel to calico [x]
+- Custom etcd [x]
 - ArgoCD CRD
 - Cert-manager CRDs
-- Custom etcd
 
