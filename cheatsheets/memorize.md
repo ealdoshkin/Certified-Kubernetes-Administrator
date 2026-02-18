@@ -7,3 +7,5 @@
 - pv:sach, pvc:sarv, sc:pv
 - ephemeral-storage
 - events | get events
+- etcd cluster restore (needs headers)
+- netpool (OR | AND rules)

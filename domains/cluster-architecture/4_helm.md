@@ -15,8 +15,8 @@ helm install prom prometheus-community/kube-prometheus-stack -f values.yaml -n m
 helm upgrade prom prometheus-community/kube-prometheus-stack -f values.yaml -n monitoring
 helm uninstall -n monitoring prom
 
-helm template prometheus-community/kube-prometheus-stack -f values.yaml > check.yml
-helm get manifest -n argocd argo > check2.yml #All Manifests
+helm template prometheus-community/kube-prometheus-stack -f values.yaml > check.yml # From repo
+helm get manifest -n argocd argo > check2.yml #All Manifests from cluster
 helm get value -n argocd argo
 
 helm ls -A

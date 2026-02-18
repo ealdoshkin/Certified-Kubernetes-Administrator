@@ -8,7 +8,8 @@
 cat /etc/resolv.con | grep cluster.local
 
 **Обращаемся к service в пределах namespace**
-`ping api`
+- `ping api`
+- `dig` не работает с short names, либо полное, либо `hosts`, `nslookup`
 
 **Обращаемся к service в другом namespace**
 `ping api.namespace`

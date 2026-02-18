@@ -6,6 +6,8 @@
 - Всё, что **не разрешено явно**, блокируется (implicit deny).
 - Применяется **в пределах namespace**.
 - Для всего namespace → `podSelector: {}`.
+- **OR** | **AND** условия (см. пример )
+- При создании Egress, разрешаем DNS-query
 
 ## 2. Типы трафика
 
@@ -78,7 +80,7 @@ spec:
               app: ingress-nginx # Разрешить от Pod с app=ingress-nginx
         - podSelector:
             matchLabels:
-              app: ingress-traeffic # Или от Pod с app=ingress-traeffic (OR)
+              app: ingress-traeffic # Или от Pod из локального нейспейса (OR)
       ports:
         - protocol: TCP
           port: 443 # Разрешить только TCP 443, иначе все порты разрешены
@@ -89,7 +91,7 @@ spec:
               kubernetes.io/metadata.name: kube-system # Разрешить только к Pod в kube-system
           podSelector:
             matchLabels:
-              k8s-app: kube-dns # Только Pod с k8s-app=kube-dns и из kube-system
+              k8s-app: kube-dns # Только Pod с k8s-app=kube-dns и из kube-system (AND)
       ports:
         - protocol: UDP
           port: 53 # Разрешить DNS только по UDP 53, всё остальное запрещено
